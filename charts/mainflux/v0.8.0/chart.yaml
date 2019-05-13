@@ -1,0 +1,14 @@
+name: mainflux
+version: v0.8.0
+appVersion: v0.8.0
+description: A Rancher Helm chart for Mainflux IoT Platform
+home: https://github.com/janko-isidorovic/mainflux-rancher
+keywords:
+  - mainflux
+  - iot
+sources:
+  - https://github.com/janko-isidorovic/mainflux-rancher
+icon: file://../mainflux-logo.png
+maintainers:
+  - name: janko
+    email: janko@mainflux.com
