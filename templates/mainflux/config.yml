@@ -1,0 +1,7 @@
+name: Mainflux IoT Platform
+description: |
+  Mainflux 
+version: 0.8.0
+category: IoT
+maintainer: "Janko Isidorovic <janko@mainflux.com>"
+license: Apache 2.0
