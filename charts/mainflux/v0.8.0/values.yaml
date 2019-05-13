@@ -85,3 +85,32 @@ things:
     MF_THINGS_DB_PASS: "mainflux"
     MF_THINGS_CACHE_URL: "redis-master:6379"
     MF_THINGS_DB: "things"
+
+defaultResources: 
+  requests:
+    cpu: 0
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+global:
+  pullPolicy: Always
+
+  replicas: 1
+
+  namespace: mainflux-test
+
+  hpa:
+    min: 1
+    max: 10
+    metric: cpu
+    utilization: 80
+
+  probe:
+    initialDelay: 3
+    period: 3
+
+  serviceType: ClusterIP
