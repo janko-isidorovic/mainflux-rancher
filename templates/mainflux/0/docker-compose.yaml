@@ -1,8 +1,15 @@
-jenkins:
-    image: rakesh635/jenkins:2.60.3
-    container_name: jenkins
-    restart: always
+version: '2'
+services:
+  test:
+    image: rawmind/web-test
+    tty: true
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+  lb:
+    image: rancher/lb-service-haproxy:v0.7.6
     ports:
-        - "${PORT}:8080"
-    environment:
-        - PLUGINS=${plugins}
+    - 8080:8080/tcp
+    labels:
+      io.rancher.container.agent.role: environmentAdmin
+      io.rancher.container.create_agent: 'true'
