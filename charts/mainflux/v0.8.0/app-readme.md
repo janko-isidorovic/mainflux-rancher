@@ -1,4 +1,4 @@
-# Mainflux
+# Mainflux IoT Platform
 
 Mainflux is modern, scalable, secure open source and patent-free IoT cloud platform written in Go.
 
