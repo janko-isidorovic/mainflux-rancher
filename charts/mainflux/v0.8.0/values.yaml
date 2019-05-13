@@ -1,0 +1,87 @@
+# images
+usersImage: mainflux/users:latest
+thingsImage: mainflux/things:latest
+usersPostgresImage: postgres:10.2-alpine
+thingsPostgresImage: postgres:10.2-alpine
+#normalizerImage: mainflux/normalizer:latest
+#dashfluxImage: mainflux/dashflux:latest
+#redisThingsImage: redis:5.0-alpine
+#redisImage: redis:4.0.9-alpine
+
+# volumes
+volumes:
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  things:
+    claimName: "mainflux-things-postgres-data-claim"
+    path: "/tmp/data/things-postgres-0" 
+    name: "mainflux-things-postgres-data"
+    diskName: "mainflux-things-postgres-data-disk"
+    mountPath: "/var/lib/postgresql/data"
+  users:
+    claimName: "mainflux-users-postgres-data-claim"
+    path: "/tmp/data/users-postgres-0"
+    name: "mainflux-users-postgres-data"
+    diskName: "mainflux-users-postgres-data-disk"
+    mountPath: "/var/lib/postgresql/data"
+
+usersDb:
+  name: "mainflux-users-postgres"
+  port: "5432"
+  env:
+    POSTGRES_USER: "mainflux"
+    POSTGRES_PASSWORD: "mainflux"
+    POSTGRES_DB: "users"
+    PGDATA: "/var/lib/postgresql/data/mainflux-users-postgres-data"
+
+users:
+  name: "users"
+  ports:
+    httpName: "users-http"
+    httpPort: 8180
+    grpcName: "users-grpc"
+    grpcPort: 8181
+  env:
+    MF_USERS_DB_HOST: "mainflux-users-postgres"
+    MF_USERS_HTTP_PORT: "8180"
+    MF_USERS_GRPC_PORT: "8181"
+    MF_USERS_SECRET: "test-secret"
+    MF_USERS_LOG_LEVEL: "debug"
+    MF_USERS_DB_PORT: "5432"
+    MF_USERS_DB_USER: "mainflux"
+    MF_USERS_DB_PASS: "mainflux"
+    MF_USERS_DB: "users"
+     
+
+thingsDb:
+  name: "mainflux-things-postgres"
+  port: "5432"
+  env:
+    POSTGRES_USER: "mainflux"
+    POSTGRES_PASSWORD: "mainflux"
+    POSTGRES_DB: "things"
+    PGDATA: "/var/lib/postgresql/data/mainflux-things-postgres-data"
+
+# TODO include redis for things
+#things-redis:
+#  name: "mainflux-things-redis"
+
+things:
+  name: "things"
+  ports:
+    httpName: "things-http"
+    httpPort: 8182
+    grpcName: "things-grpc"
+    grpcPort: 8183
+  env:
+    MF_THINGS_DB_HOST: "mainflux-things-postgres"
+    MF_THINGS_DB_PORT: "5432"
+    MF_THINGS_HTTP_PORT: "8182"
+    MF_THINGS_GRPC_PORT: "8183"
+    MF_USERS_URL: "users:8181"
+    MF_THINGS_SECRET: "test-secret"
+    MF_THINGS_LOG_LEVEL: "debug"
+    MF_THINGS_DB_USER: "mainflux"
+    MF_THINGS_DB_PASS: "mainflux"
+    MF_THINGS_CACHE_URL: "redis-master:6379"
+    MF_THINGS_DB: "things"
