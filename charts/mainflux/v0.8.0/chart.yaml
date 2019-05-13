@@ -1,4 +1,4 @@
-name: Mainflux
+name: mainflux
 version: v0.8.0
 appVersion: v0.8.0
 description: A Rancher Helm chart for Mainflux IoT Platform
