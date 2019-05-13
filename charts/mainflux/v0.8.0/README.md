@@ -1,4 +1,4 @@
-# Configuration
+## Configuration
 
 The following table lists the configurable parameters of the Mainflux chart and their default values.
 
